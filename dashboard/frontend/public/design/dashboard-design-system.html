@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Dashboard — Design System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; }
+    .font-mono-code { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: fadeIn 0.4s ease-out forwards; }
+    .animate-in-delay-1 { animation-delay: 0.1s; }
+    .animate-in-delay-2 { animation-delay: 0.2s; }
+    .animate-in-delay-3 { animation-delay: 0.3s; }
+
+    /* Glow effects */
+    .glow-indigo { box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
+    .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.15); }
+    .glow-amber { box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
+    .glow-red { box-shadow: 0 0 20px rgba(239, 68, 68, 0.15); }
+
+    /* Gradient text */
+    .text-gradient { background: linear-gradient(135deg, #818cf8, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Glass card */
+    .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+  </style>
+</head>
+<body>
+  <!-- HERO HEADER -->
+  <header class="sticky top-0 z-50 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">A</div>
+        <div>
+          <h1 class="text-lg font-semibold text-white">Design System</h1>
+          <p class="text-xs text-slate-400">Company Dashboard — Component Library</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-sm text-slate-400">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+          v1.0.0
+        </span>
+        <span class="hidden sm:inline text-slate-600">|</span>
+        <span class="hidden sm:inline">184 Components</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- ============================== -->
+    <!-- SECTION: COLOR PALETTE         -->
+    <!-- ============================== -->
+    <section class="mb-16 animate-in">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-1 h-6 rounded-full bg-indigo-500"></span>
+        <h2 class="text-2xl font-bold text-white">Color Palette</h2>
+      </div>
+      <p class="text-slate-400 mb-8 ml-4">Dark theme foundation with semantic accent colors</p>
+
+      <!-- Backgrounds -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="rounded-xl border border-slate-700/50 overflow-hidden">
+          <div class="h-20 bg-slate-950"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">slate-950</p>
+            <p class="text-xs text-slate-400 font-mono-code">#020617</p>
+            <p class="text-xs text-slate-500">Deepest background</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 overflow-hidden">
+          <div class="h-20 bg-slate-900"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">slate-900</p>
+            <p class="text-xs text-slate-400 font-mono-code">#0f172a</p>
+            <p class="text-xs text-slate-500">Primary background</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 overflow-hidden">
+          <div class="h-20 bg-slate-800"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">slate-800</p>
+            <p class="text-xs text-slate-400 font-mono-code">#1e293b</p>
+            <p class="text-xs text-slate-500">Card/surface bg</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 overflow-hidden">
+          <div class="h-20 bg-slate-700"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">slate-700</p>
+            <p class="text-xs text-slate-400 font-mono-code">#334155</p>
+            <p class="text-xs text-slate-500">Borders / dividers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accent colors -->
+      <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Accent Colors</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="rounded-xl border border-indigo-500/30 overflow-hidden glow-indigo">
+          <div class="h-20 bg-indigo-500 flex items-center justify-center">
+            <span class="text-white text-xs font-mono-code font-bold">Primary</span>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Indigo</p>
+            <p class="text-xs text-slate-400 font-mono-code">#6366f1</p>
+            <p class="text-xs text-slate-500">Primary actions, links</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-indigo-400/30 overflow-hidden">
+          <div class="h-20 bg-indigo-400"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Indigo-400</p>
+            <p class="text-xs text-slate-400 font-mono-code">#818cf8</p>
+            <p class="text-xs text-slate-500">Hover / lighter accent</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-green-500/30 overflow-hidden glow-green">
+          <div class="h-20 bg-green-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Green</p>
+            <p class="text-xs text-slate-400 font-mono-code">#22c55e</p>
+            <p class="text-xs text-slate-500">Success, active</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-amber-500/30 overflow-hidden glow-amber">
+          <div class="h-20 bg-amber-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Amber</p>
+            <p class="text-xs text-slate-400 font-mono-code">#f59e0b</p>
+            <p class="text-xs text-slate-500">Pending, warning</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-red-500/30 overflow-hidden glow-red">
+          <div class="h-20 bg-red-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Red</p>
+            <p class="text-xs text-slate-400 font-mono-code">#ef4444</p>
+            <p class="text-xs text-slate-500">Failed, blocked</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-blue-500/30 overflow-hidden">
+          <div class="h-20 bg-blue-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Blue</p>
+            <p class="text-xs text-slate-400 font-mono-code">#3b82f6</p>
+            <p class="text-xs text-slate-500">Info, links</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-purple-500/30 overflow-hidden">
+          <div class="h-20 bg-purple-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Purple</p>
+            <p class="text-xs text-slate-400 font-mono-code">#a855f7</p>
+            <p class="text-xs text-slate-500">Premium, special</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-teal-500/30 overflow-hidden">
+          <div class="h-20 bg-teal-500"></div>
+          <div class="p-4">
+            <p class="text-sm font-semibold text-white">Teal</p>
+            <p class="text-xs text-slate-400 font-mono-code">#14b8a6</p>
+            <p class="text-xs text-slate-500">Secondary accent</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text colors -->
+      <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Text Colors</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-white">Text white</p>
+          <p class="text-xs text-slate-400 font-mono-code">#f8fafc</p>
+          <p class="text-xs text-slate-500">Primary text</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-slate-200">Text 200</p>
+          <p class="text-xs text-slate-400 font-mono-code">#e2e8f0</p>
+          <p class="text-xs text-slate-500">Body text</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-slate-300">Text 300</p>
+          <p class="text-xs text-slate-400 font-mono-code">#cbd5e1</p>
+          <p class="text-xs text-slate-500">Secondary text</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-slate-400">Text 400</p>
+          <p class="text-xs text-slate-400 font-mono-code">#94a3b8</p>
+          <p class="text-xs text-slate-500">Muted text</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-slate-500">Text 500</p>
+          <p class="text-xs text-slate-400 font-mono-code">#64748b</p>
+          <p class="text-xs text-slate-500">Placeholder</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 p-4 bg-slate-800">
+          <p class="font-semibold text-slate-600">Text 600</p>
+          <p class="text-xs text-slate-400 font-mono-code">#475569</p>
+          <p class="text-xs text-slate-500">Disabled</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SECTION: TYPOGRAPHY           -->
+    <!-- ============================== -->
+    <section class="mb-16 animate-in animate-in-delay-1">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-1 h-6 rounded-full bg-indigo-500"></span>
+        <h2 class="text-2xl font-bold text-white">Typography</h2>
+      </div>
+      <p class="text-slate-400 mb-8 ml-4">Inter for UI, JetBrains Mono for code and data</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-6">Headings</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-[42px] font-extrabold text-white leading-tight">H1 — 42px</p>
+              <p class="text-xs text-slate-500 mt-1">font-extrabold, leading-tight</p>
+            </div>
+            <div>
+              <p class="text-[32px] font-bold text-white leading-snug">H2 — 32px</p>
+              <p class="text-xs text-slate-500 mt-1">font-bold, leading-snug</p>
+            </div>
+            <div>
+              <p class="text-[24px] font-bold text-white leading-snug">H3 — 24px</p>
+              <p class="text-xs text-slate-500 mt-1">font-bold, leading-snug</p>
+            </div>
+            <div>
+              <p class="text-[20px] font-semibold text-white leading-normal">H4 — 20px</p>
+              <p class="text-xs text-slate-500 mt-1">font-semibold, leading-normal</p>
+            </div>
+            <div>
+              <p class="text-[16px] font-semibold text-white leading-normal">H5 — 16px</p>
+              <p class="text-xs text-slate-500 mt-1">font-semibold, leading-normal</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-6">Body & Mono</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-[15px] text-slate-200 leading-relaxed">Body — 15px. The quick brown fox jumps over the lazy dog. This is the standard body text used throughout the dashboard for paragraphs and descriptions.</p>
+              <p class="text-xs text-slate-500 mt-1">font-normal (400), leading-relaxed</p>
+            </div>
+            <div>
+              <p class="text-[14px] text-slate-300">Body Small — 14px. Used for metadata, secondary info, and smaller UI elements.</p>
+              <p class="text-xs text-slate-500 mt-1">font-normal (400)</p>
+            </div>
+            <div>
+              <p class="text-[12px] text-slate-400">Caption — 12px. Labels, timestamps, helper text.</p>
+              <p class="text-xs text-slate-500 mt-1">font-normal (400)</p>
+            </div>
+            <div class="pt-4 border-t border-slate-700/50">
+              <p class="font-mono-code text-[14px] text-indigo-400">Mono — 14px. Used for code, data values, API responses</p>
+              <p class="text-xs text-slate-500 mt-1">'JetBrains Mono', mono, 14px</p>
+            </div>
+            <div>
+              <p class="font-mono-code text-[12px] text-green-400">$ npm run build  →  ./dist/</p>
+              <p class="text-xs text-slate-500 mt-1">Small mono for inline code / terminal output</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SECTION: COMPONENTS           -->
+    <!-- ============================== -->
+    <section class="mb-16 animate-in animate-in-delay-2">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-1 h-6 rounded-full bg-indigo-500"></span>
+        <h2 class="text-2xl font-bold text-white">Components</h2>
+      </div>
+      <p class="text-slate-400 mb-8 ml-4">Reusable UI components for the entire dashboard</p>
+
+      <!-- ---- BUTTONS ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Buttons</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <div class="flex flex-wrap gap-4 mb-6">
+            <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-indigo-600/20">Primary</button>
+            <button class="px-5 py-2.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 rounded-lg font-medium text-sm transition-all duration-200">Secondary</button>
+            <button class="px-5 py-2.5 border border-slate-600 hover:border-slate-500 text-slate-300 rounded-lg font-medium text-sm transition-all duration-200">Outline</button>
+            <button class="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-green-600/20">Success</button>
+            <button class="px-5 py-2.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg font-medium text-sm transition-all duration-200">Danger</button>
+            <button class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg font-medium text-sm transition-all duration-200">Ghost</button>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <button class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md font-medium text-xs transition-all duration-200">Small</button>
+            <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium text-sm transition-all duration-200">Default</button>
+            <button class="px-7 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-semibold text-base transition-all duration-200 shadow-lg shadow-indigo-600/20">Large</button>
+            <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-medium text-sm transition-all duration-200 shadow-lg shadow-indigo-600/20">
+              <span class="flex items-center gap-2">Pill <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+            <button class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-indigo-600/20" disabled>Disabled</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- CARDS ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Cards</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-6 hover:border-slate-600/50 transition-all duration-200">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Standard Card</span>
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Card Title</h4>
+            <p class="text-sm text-slate-400 mb-4">This is a standard card component with a title, description, and footer area.</p>
+            <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
+              <span class="text-xs text-slate-500">Last updated 2m ago</span>
+              <button class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Action →</button>
+            </div>
+          </div>
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-6 hover:border-indigo-500/30 transition-all duration-200">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Interactive Card</span>
+              <button class="p-1.5 rounded-md hover:bg-slate-700 text-slate-500 hover:text-slate-300 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01"/></svg>
+              </button>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Hover Spotlight</h4>
+            <p class="text-sm text-slate-400 mb-4">Borders glow with indigo accent on hover. Clickable and interactive.</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 bg-slate-700 rounded-md text-xs text-slate-300">Tag 1</span>
+              <span class="px-2.5 py-1 bg-slate-700 rounded-md text-xs text-slate-300">Tag 2</span>
+            </div>
+          </div>
+          <div class="glass rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Glass Card</span>
+              <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Glass Morphism</h4>
+            <p class="text-sm text-slate-400 mb-4">Frosted glass effect with backdrop blur for overlay panels and modals.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              Premium variant
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- KPI WIDGETS ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">KPI Widgets</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-5 relative overflow-hidden group hover:border-indigo-500/30 transition-all duration-300">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Tasks</span>
+                <span class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                </span>
+              </div>
+              <p class="text-3xl font-bold text-white mb-1">2,847</p>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-green-400">↑ 12.5%</span>
+                <span class="text-xs text-slate-500">vs last month</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-5 relative overflow-hidden group hover:border-green-500/30 transition-all duration-300">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-green-500/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Agents</span>
+                <span class="p-1.5 rounded-lg bg-green-500/10 text-green-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </span>
+              </div>
+              <p class="text-3xl font-bold text-white mb-1">168</p>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-green-400">92%</span>
+                <span class="text-xs text-slate-500">utilization rate</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-5 relative overflow-hidden group hover:border-amber-500/30 transition-all duration-300">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Revenue MTD</span>
+                <span class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </span>
+              </div>
+              <p class="text-3xl font-bold text-white mb-1">$4,280</p>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-amber-400">↑ 8.3%</span>
+                <span class="text-xs text-slate-500">vs target</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-5 relative overflow-hidden group hover:border-indigo-500/30 transition-all duration-300">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Today Complete</span>
+                <span class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </span>
+              </div>
+              <p class="text-3xl font-bold text-white mb-1">142</p>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-green-400">↑ 23</span>
+                <span class="text-xs text-slate-500">from yesterday</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- BADGES ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Badges & Status Indicators</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <div class="flex flex-wrap gap-3 mb-6">
+            <span class="px-2.5 py-1 bg-green-500/15 text-green-400 rounded-full text-xs font-medium border border-green-500/20">Active</span>
+            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 rounded-full text-xs font-medium border border-amber-500/20">Pending</span>
+            <span class="px-2.5 py-1 bg-red-500/15 text-red-400 rounded-full text-xs font-medium border border-red-500/20">Failed</span>
+            <span class="px-2.5 py-1 bg-blue-500/15 text-blue-400 rounded-full text-xs font-medium border border-blue-500/20">Info</span>
+            <span class="px-2.5 py-1 bg-indigo-500/15 text-indigo-400 rounded-full text-xs font-medium border border-indigo-500/20">Engineering</span>
+            <span class="px-2.5 py-1 bg-purple-500/15 text-purple-400 rounded-full text-xs font-medium border border-purple-500/20">Premium</span>
+            <span class="px-2.5 py-1 bg-slate-600/30 text-slate-400 rounded-full text-xs font-medium">Default</span>
+            <span class="px-2.5 py-1 bg-slate-700/50 text-slate-300 rounded-md text-xs font-medium border border-slate-600/50">Filter</span>
+          </div>
+          <!-- Dot indicators -->
+          <div class="flex flex-wrap gap-6">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs text-slate-300">Online</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span class="text-xs text-slate-300">Idle</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500"></span>
+              <span class="text-xs text-slate-300">Offline</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-xs text-slate-300">Processing</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+              <span class="text-xs text-slate-300">Inactive</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- INPUTS ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Form Inputs</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Text Input</label>
+              <input type="text" placeholder="Enter agent name..." class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200 text-sm" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Search</label>
+              <div class="relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" placeholder="Search agents, tasks..." class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200 text-sm" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Select</label>
+              <select class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200 text-sm appearance-none cursor-pointer">
+                <option>All Categories</option>
+                <option>Engineering</option>
+                <option>Marketing</option>
+                <option>Content</option>
+                <option>Analytics</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">With Icon</label>
+              <div class="relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                <input type="text" placeholder="Filter by tag..." class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200 text-sm" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1.5">Textarea</label>
+              <textarea rows="3" placeholder="Task description..." class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200 text-sm resize-none"></textarea>
+            </div>
+            <div class="flex flex-col justify-end gap-3">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <div class="w-4 h-4 rounded border border-slate-600 bg-slate-900 flex items-center justify-center">
+                  <svg class="w-3 h-3 text-indigo-400 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                </div>
+                <span class="text-sm text-slate-300">Checkbox option</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <div class="w-4 h-4 rounded-full border border-slate-600 bg-slate-900 flex items-center justify-center">
+                  <div class="w-2 h-2 rounded-full bg-indigo-400 hidden"></div>
+                </div>
+                <span class="text-sm text-slate-300">Radio option</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <div class="w-9 h-5 rounded-full bg-indigo-600 p-0.5 flex items-center justify-end transition-all">
+                  <div class="w-4 h-4 rounded-full bg-white shadow"></div>
+                </div>
+                <span class="text-sm text-slate-300">Toggle switch</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- TABLES ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Data Tables</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700/50">
+                  <th class="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Agent</th>
+                  <th class="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Category</th>
+                  <th class="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                  <th class="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tasks</th>
+                  <th class="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Success Rate</th>
+                  <th class="text-right px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Last Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center text-xs font-bold text-indigo-400">E</div>
+                      <span class="font-medium text-white">Engineer Bot</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4"><span class="text-slate-300">Engineering</span></td>
+                  <td class="px-6 py-4"><span class="px-2 py-0.5 bg-green-500/15 text-green-400 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-6 py-4 font-mono-code text-slate-300">342</td>
+                  <td class="px-6 py-4"><span class="font-medium text-green-400">98%</span></td>
+                  <td class="px-6 py-4 text-right text-slate-400 font-mono-code text-xs">2m ago</td>
+                </tr>
+                <tr class="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-green-500/15 flex items-center justify-center text-xs font-bold text-green-400">M</div>
+                      <span class="font-medium text-white">Market Maven</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4"><span class="text-slate-300">Marketing</span></td>
+                  <td class="px-6 py-4"><span class="px-2 py-0.5 bg-green-500/15 text-green-400 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-6 py-4 font-mono-code text-slate-300">187</td>
+                  <td class="px-6 py-4"><span class="font-medium text-green-400">95%</span></td>
+                  <td class="px-6 py-4 text-right text-slate-400 font-mono-code text-xs">5m ago</td>
+                </tr>
+                <tr class="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-amber-500/15 flex items-center justify-center text-xs font-bold text-amber-400">C</div>
+                      <span class="font-medium text-white">Content Writer</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4"><span class="text-slate-300">Content</span></td>
+                  <td class="px-6 py-4"><span class="px-2 py-0.5 bg-amber-500/15 text-amber-400 rounded-full text-xs font-medium">Pending</span></td>
+                  <td class="px-6 py-4 font-mono-code text-slate-300">523</td>
+                  <td class="px-6 py-4"><span class="font-medium text-amber-400">87%</span></td>
+                  <td class="px-6 py-4 text-right text-slate-400 font-mono-code text-xs">15m ago</td>
+                </tr>
+                <tr class="hover:bg-slate-700/20 transition-colors">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-red-500/15 flex items-center justify-center text-xs font-bold text-red-400">D</div>
+                      <span class="font-medium text-white">Design Agent</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4"><span class="text-slate-300">Design</span></td>
+                  <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-500/15 text-red-400 rounded-full text-xs font-medium">Failed</span></td>
+                  <td class="px-6 py-4 font-mono-code text-slate-300">89</td>
+                  <td class="px-6 py-4"><span class="font-medium text-red-400">72%</span></td>
+                  <td class="px-6 py-4 text-right text-slate-400 font-mono-code text-xs">1h ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- SIDEBAR NAVIGATION ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Sidebar Navigation</h3>
+        </div>
+        <div class="w-64 rounded-xl overflow-hidden border border-slate-700/50">
+          <div class="bg-slate-800 p-4">
+            <div class="flex items-center gap-3 px-3 py-3 mb-2">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">A</div>
+              <div>
+                <p class="text-sm font-semibold text-white">The Agency</p>
+                <p class="text-xs text-slate-500">Dashboard v1</p>
+              </div>
+            </div>
+            <nav class="space-y-1">
+              <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 text-sm font-medium transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Dashboard
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 text-sm transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Agents
+                <span class="ml-auto px-1.5 py-0.5 bg-indigo-500/20 text-indigo-400 text-[10px] font-semibold rounded">184</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 text-sm transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                Tasks
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 text-sm transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Reports
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 text-sm transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Settings
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- CHART CONTAINER ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Chart Container</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h4 class="text-base font-semibold text-white">Revenue Trend</h4>
+              <p class="text-xs text-slate-500">Monthly revenue over the past 6 months</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 text-xs font-medium text-slate-300 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors">1M</button>
+              <button class="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 rounded-md">6M</button>
+              <button class="px-3 py-1.5 text-xs font-medium text-slate-300 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors">1Y</button>
+            </div>
+          </div>
+          <!-- Chart area mockup -->
+          <div class="h-48 w-full relative">
+            <!-- Grid lines -->
+            <div class="absolute inset-0 flex flex-col justify-between">
+              <div class="border-t border-slate-700/30"></div>
+              <div class="border-t border-slate-700/30"></div>
+              <div class="border-t border-slate-700/30"></div>
+              <div class="border-t border-slate-700/30"></div>
+            </div>
+            <!-- Line chart mockup -->
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 600 200" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,160 Q30,155 60,140 Q90,125 120,135 Q150,145 180,110 Q210,75 240,85 Q270,95 300,70 Q330,45 360,55 Q390,65 420,40 Q450,15 480,30 Q510,45 540,25 Q570,5 600,15" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+              <path d="M0,160 Q30,155 60,140 Q90,125 120,135 Q150,145 180,110 Q210,75 240,85 Q270,95 300,70 Q330,45 360,55 Q390,65 420,40 Q450,15 480,30 Q510,45 540,25 Q570,5 600,15 L600,200 L0,200 Z" fill="url(#chartGradient)" opacity="0.5"/>
+              <circle cx="420" cy="40" r="4" fill="#6366f1" stroke="#1e293b" stroke-width="2"/>
+            </svg>
+          </div>
+          <!-- X-axis labels -->
+          <div class="flex justify-between mt-3 text-[11px] text-slate-500">
+            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- PROGRESS + TOOLTIPS ---- -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-5 h-0.5 bg-indigo-500"></div>
+          <h3 class="text-lg font-semibold text-white">Progress & Loaders</h3>
+        </div>
+        <div class="bg-slate-800 rounded-xl border border-slate-700/50 p-8">
+          <div class="space-y-5">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-xs text-slate-300">Task Completion</span>
+                <span class="text-xs font-mono-code text-indigo-400">68%</span>
+              </div>
+              <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 68%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-xs text-slate-300">Revenue Target</span>
+                <span class="text-xs font-mono-code text-green-400">85%</span>
+              </div>
+              <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-xs text-slate-300">Agent Utilization</span>
+                <span class="text-xs font-mono-code text-amber-400">42%</span>
+              </div>
+              <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full" style="width: 42%"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Spinner -->
+          <div class="flex items-center gap-4 mt-8">
+            <div class="w-5 h-5 border-2 border-slate-600 border-t-indigo-500 rounded-full animate-spin"></div>
+            <div class="flex gap-1">
+              <div class="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+              <div class="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+              <div class="w-2 h-2 bg-indigo-300 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+            </div>
+            <span class="text-sm text-slate-400 animate-pulse">Loading agents...</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="border-t border-slate-700/50 pt-8 pb-16 text-center">
+      <p class="text-sm text-slate-500">Company Dashboard — Design System v1.0</p>
+      <p class="text-xs text-slate-600 mt-1">Built for The Agency • 184+ AI Agents</p>
+    </footer>
+  </main>
+</body>
+</html>
