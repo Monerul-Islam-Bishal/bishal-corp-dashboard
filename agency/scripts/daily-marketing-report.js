@@ -6,12 +6,19 @@ const fs = require('fs');
 const path = require('path');
 
 const AGENCY_DIR = '/data/workspace/agency';
+const STATS_FILE = path.join(AGENCY_DIR, 'tool-stats', 'history.json');
 const today = new Date().toISOString().split('T')[0];
+
+function getDayNum() {
+  const start = new Date('2026-05-07');
+  const now = new Date();
+  return Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
+}
 
 async function check(url) {
   return new Promise((resolve) => {
     const start = Date.now();
-    http.get(url, { timeout: 10000 }, (res) => {
+    http.get(url, { timeout: 15000 }, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
@@ -28,10 +35,30 @@ async function check(url) {
   });
 }
 
+function stripHtml(html) {
+  return ((html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim());
+}
+
+function countFaqs(html) {
+  const patterns = ['faq-item', 'faq-q', 'class="faq"'];
+  return Math.max(...patterns.map(p => ((html || '').match(new RegExp(p, 'gi')) || []).length));
+}
+
+function loadHistory() {
+  try { return JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')); }
+  catch(e) { return { days: [], lastWordCounts: {} }; }
+}
+
+function saveHistory(data) {
+  fs.mkdirSync(path.dirname(STATS_FILE), { recursive: true });
+  fs.writeFileSync(STATS_FILE, JSON.stringify(data, null, 2));
+}
+
 async function run() {
+  const dayNum = getDayNum();
   console.log(`📊 Daily Marketing Report — ${today}\n`);
 
-    // ALL SITES TO CHECK
+  // ALL SITES TO CHECK
   const sites = {
     'bmiio.us (main)': 'https://bmiio.us',
     'bmi.bmiio.us (BMI)': 'https://bmi.bmiio.us',
@@ -40,19 +67,6 @@ async function run() {
     'passgen.bmiio.us (Password)': 'https://passgen.bmiio.us'
   };
 
-  const results = {};
-  for (const [name, url] of Object.entries(sites)) {
-    const r = await check(url);
-    results[name] = r;
-  }
-
-  console.log('━━━ SITE HEALTH ━━━');
-  for (const [name, r] of Object.entries(results)) {
-    const icon = r.status === 200 ? '✅' : r.status ? '⚠️' : '❌';
-    console.log(`${icon} ${name}: ${r.status} (${r.time}ms)`);
-  }
-
-  // Verify GA tags on each site
   const gaMap = {
     'https://bmiio.us': 'G-HRB36D7927',
     'https://bmi.bmiio.us': 'G-HRB36D7927',
@@ -61,87 +75,108 @@ async function run() {
     'https://passgen.bmiio.us': 'G-EE984XGR5C'
   };
 
-  console.log(`\n━━━ ANALYTICS ━━━`);
-  for (const [name, r] of Object.entries(results)) {
-    const expectedGA = gaMap[r.headers?.location ? check(r.headers.location) : ''];
-    const actualGA = Object.entries(gaMap).find(([url, id]) => r.body.includes(id));
-    console.log(`${actualGA ? '✅' : '❌'} ${name}`);
+  const results = {};
+  for (const [name, url] of Object.entries(sites)) {
+    const r = await check(url);
+    results[name] = r;
   }
 
-  // Check sitemaps
-  console.log(`\n━━━ INDEXING ━━━`);
-  const sitemaps = [
-    'https://bmiio.us/sitemap.xml',
-    'https://randomgen.us/sitemap.xml'
-  ];
+  // ━━ SITE HEALTH ━━
+  console.log('━ SITE HEALTH ━');
+  for (const [name, r] of Object.entries(results)) {
+    const icon = r.status === 200 ? '✅' : r.status ? '⚠️' : '❌';
+    console.log(`${icon} ${name}: ${r.status} (${r.time}ms)`);
+  }
+
+  // ━━ ANALYTICS ━━
+  console.log('\n━ ANALYTICS ━');
+  for (const [name, r] of Object.entries(results)) {
+    const expectedGA = Object.entries(gaMap).find(([url, id]) => r.body.includes(id));
+    console.log(`${expectedGA ? '✅' : '❌'} ${name}`);
+  }
+
+  // ━━ INDEXING ━━
+  console.log('\n━ INDEXING ━');
+  const sitemaps = ['https://bmiio.us/sitemap.xml', 'https://randomgen.us/sitemap.xml'];
   for (const url of sitemaps) {
     const s = await check(url);
     console.log(`${s.status === 200 ? '✅' : '❌'} ${url} (${s.status})`);
   }
 
-  // Word count per site
-  const stripHtml = (html) => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-  console.log(`\n━━━ CONTENT ━━━`);
+  // ━━ CONTENT + TRAFFIC COMPARISON ━━
+  const history = loadHistory();
+  const lastCounts = history.lastWordCounts || {};
+
+  console.log('\n━ CONTENT & TRAFFIC ━');
+
+  const todayCounts = {};
   for (const [name, r] of Object.entries(results)) {
     const words = stripHtml(r.body).split(' ').length;
-    console.log(`${name}: ~${words} words`);
+    const faqs = countFaqs(r.body);
+    todayCounts[name] = { words, faqs };
+
+    const prevWords = lastCounts[name] ? lastCounts[name].words : null;
+    let wordChange = '';
+    if (prevWords !== null) {
+      const diff = words - prevWords;
+      wordChange = diff > 0 ? ` 📈 +${diff}` : diff < 0 ? ` 📉 ${diff}` : ' 🔄 no change';
+    }
+
+    console.log(`${name}: ~${words} words | ${faqs} FAQs${wordChange}`);
   }
 
-  // Generate action items
-  console.log(`\n━━━ TODAY'S ACTIONS ━━━`);
-  console.log(`1. Monitor Search Console for indexing status`);
-  console.log(`2. Check GA app for first visitor data`);
-  console.log(`3. Track competitor rankings`);
-  console.log(`4. Prepare backlink outreach`);
-  console.log(`5. Expand FAQ with new "People Also Ask" queries`);
+  // Save today's counts for future comparison
+  history.lastWordCounts = todayCounts;
+  history.days = history.days || [];
+  history.days.push({ date: today, day: dayNum, wordCounts: { ...todayCounts } });
+  // Keep only last 30 days
+  if (history.days.length > 30) history.days = history.days.slice(-30);
+  saveHistory(history);
 
-  // Write stats to files
-  const statsLine = `| ${today} | — | — | — | — | Health check |`;
-  const statsDir = path.join(AGENCY_DIR, 'tool-stats');
-  
-  try {
-    const bmiStats = fs.readFileSync(path.join(statsDir, 'bmiio-us.md'), 'utf8');
-    const rngStats = fs.readFileSync(path.join(statsDir, 'randomgen-us.md'), 'utf8');
-    
-    const updatedBmi = bmiStats.replace(/^## Daily Stats Tracker\n\n.*?\n\n/s, 
-      `## Daily Stats Tracker\n\n| Date | Visitors | Searches | Backlinks | Rank Change | Notes |\n|------|----------|----------|-----------|-------------|-------|\n${statsLine}\n\n`);
-    
-    const updatedRng = rngStats.replace(/^## Daily Stats Tracker\n\n.*?\n\n/s,
-      `## Daily Stats Tracker\n\n| Date | Visitors | Searches | Backlinks | Rank Change | Notes |\n|------|----------|----------|-----------|-------------|-------|\n${statsLine}\n\n`);
-    
-    fs.writeFileSync(path.join(statsDir, 'bmiio-us.md'), updatedBmi);
-    fs.writeFileSync(path.join(statsDir, 'randomgen-us.md'), updatedRng);
-  } catch(e) {
-    console.error('Stats update error (non-fatal):', e.message);
-  }
+  // Traffic note (from GA - can't access directly, but prompt user)
+  console.log('\n━ TRAFFIC NOTE ━');
+  console.log('📱 Check Google Analytics app on your phone for real traffic data.');
+  console.log('🔍 Check Google Search Console for first search impressions.');
+
+  // ━━ TODAY'S ACTIONS ━━
+  console.log('\n━ TODAY\'S ACTIONS ━');
+  console.log('1. Open Google Analytics app → check for first visitors');
+  console.log('2. Open Google Search Console → check for indexing');
+  console.log('3. Share one tool on social media (Reddit, Twitter)');
+  console.log('4. Review yesterday\'s suggestions');
+  console.log('5. Prepare backlink outreach list');
 
   // Generate report file
-  const dayNum = countDays();
-  const report = `# Day ${dayNum} Report — ${today}\n\n` +
-    `## Morning Health Check\n` +
-    `- **bmiio.us**: ${bmi.status} (${bmi.time}ms)\n` +
-    `- **randomgen.us**: ${rng.status} (${rng.time}ms)\n` +
-    `- **Analytics**: ${bmiGA ? '✅' : '❌'} bmiio | ${rngGA ? '✅' : '❌'} randomgen\n` +
-    `- **Sitemaps**: Both accessible\n\n` +
-    `## Content\n` +
-    `- bmiio.us: ~${bmiWords} words\n` +
-    `- randomgen.us: ~${rngWords} words\n\n` +
-    `## Actions for Today\n` +
-    `1. Check Search Console for first crawl data\n` +
-    `2. Monitor Google Analytics app for visitors\n` +
-    `3. Track keyword rankings\n` +
-    `4. Backlink outreach\n` +
-    `5. Content expansion\n\n---\n`;
+  const report = [
+    `# Day ${dayNum} Report — ${today}`,
+    '',
+    '## Morning Health Check',
+    ...Object.entries(results).map(([name, r]) =>
+      `- **${name}**: ${r.status === 200 ? '✅' : '❌'} ${r.status} (${r.time}ms)`
+    ),
+    '',
+    '## Content Stats',
+    ...Object.entries(todayCounts).map(([name, c]) =>
+      `- **${name}**: ~${c.words} words | ${c.faqs} FAQs`
+    ),
+    '',
+    '## Analytics',
+    '- GA check: All sites scanned',
+    '- Traffic data: Check phone app',
+    '',
+    '## Actions for Today',
+    '1. Check Search Console for first crawl data',
+    '2. Monitor Google Analytics app for visitors',
+    '3. Track keyword rankings',
+    '4. Backlink outreach',
+    '5. Content expansion',
+    '',
+    '---'
+  ].join('\n');
 
   const reportPath = path.join(AGENCY_DIR, 'reports', `day-${dayNum}.md`);
   fs.writeFileSync(reportPath, report);
   console.log(`\n📝 Report saved: reports/day-${dayNum}.md`);
 }
 
-function countDays() {
-  const start = new Date('2026-05-07');
-  const now = new Date();
-  return Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
-}
-
-run().catch(e => console.error('Fatal:', e));
+run().catch(e => console.error('Fatal error:', e.message));
